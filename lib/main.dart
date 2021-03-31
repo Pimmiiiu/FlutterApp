@@ -95,13 +95,11 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         }
       }
-    }
-    else{
+    } else {
       setState(() {
         checkPrime = false;
       });
     }
-    
   }
 
   void _getfibonacci(int fibonacci) {
@@ -134,56 +132,61 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Column(
           children: [
             Expanded(
+                flex: 5,
                 child: Container(
-              width: double.infinity,
-              color: (checkFibonacci == true)
-                  ? Colors.lightGreenAccent
-                  : Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text('$_fibonacci', style: FontTheme.numberText),
-                  (checkFibonacci == true)
-                      ? Text('This number is fibonacci number')
-                      : Text('This number is not fibonacci number')
-                ],
-              ),
-            )),
+                  width: double.infinity,
+                  color: (checkFibonacci == true)
+                      ? Colors.lightGreenAccent
+                      : Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('$_fibonacci', style: FontTheme.numberText),
+                      (checkFibonacci == true)
+                          ? Text('This number is fibonacci number')
+                          : Text('This number is not fibonacci number')
+                    ],
+                  ),
+                )),
             Expanded(
+                flex: 5,
                 child: Container(
-              width: double.infinity,
-              color:
-                  (checkPrime == true) ? Colors.lightGreenAccent : Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text('$_prime', style: FontTheme.numberText),
-                  (checkPrime == true)
-                      ? Text('This number is prime number')
-                      : Text('This number is not prime number')
-                ],
-              ),
-            )),
+                  width: double.infinity,
+                  color: (checkPrime == true)
+                      ? Colors.lightGreenAccent
+                      : Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('$_prime', style: FontTheme.numberText),
+                      (checkPrime == true)
+                          ? Text('This number is prime number')
+                          : Text('This number is not prime number')
+                    ],
+                  ),
+                )),
             Row(
               children: [
                 Expanded(
                     child: Container(
-                        height: 50,
-                        color: Colors.white,
-                        child: RaisedButton(
-                          onPressed: _decrementCounter,
-                          child: Text('-', style: FontTheme.numberText),
-                        ))),
+                  height: 40,
+                  child: RaisedButton(
+                    color: Colors.white,
+                    onPressed: _decrementCounter,
+                    child: Text('-', style: FontTheme.numberText),
+                  ),
+                )),
                 Expanded(
                     child: Container(
-                        height: 50,
-                        color: Colors.white,
-                        child: RaisedButton(
-                          onPressed: _incrementCounter,
-                          child: Text('+', style: FontTheme.numberText),
-                        ))),
+                  height: 40,
+                  child: RaisedButton(
+                    color: Colors.white,
+                    onPressed: _incrementCounter,
+                    child: Text('+', style: FontTheme.numberText),
+                  ),
+                )),
               ],
             ),
           ],
