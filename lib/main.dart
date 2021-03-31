@@ -72,13 +72,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _getfibonacci(int fibonacci) { 
+    listFibonacci.add(n1);
     while (fibonacci >= next) { // check เลข fibonacci จนถึงเลขที่กดอยู่
       n1 = n2;
       n2 = next;
       next = n1 + n2; 
       listFibonacci.add(next); // add เข้า list เพราะจะเอามา check ต่อ 
     }
-    if (listFibonacci.contains(fibonacci) || fibonacci == 0) { // check ว่า เลขที่กดอยู่ อยู่ใน List fibonacci หรือป่าว 
+    if (listFibonacci.contains(fibonacci)) { // check ว่า เลขที่กดอยู่ อยู่ใน List fibonacci หรือป่าว 
       setState(() {
         checkFibonacci = true;
       });
