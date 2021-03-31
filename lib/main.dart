@@ -29,15 +29,19 @@ class _MyHomePageState extends State<MyHomePage> {
   int _fibonacci = 0;
   int n1 = 0;
   int n2 = 1;
-  bool check;
+  int next = 0;
+  bool checkFibonacci;
   bool checkPrime;
   int _prime = 0;
+  List<int> listFibonacci = [];
   @override
   void initState() {
+    _getfibonacci(_fibonacci);
+    _getPrime(_prime);
     super.initState();
   }
 
-  void _incrementCounter() {
+  void _incrementCounter() { // กด button แล้ว +เลข
     setState(() {
       _fibonacci++;
       _getfibonacci(_fibonacci);
@@ -49,18 +53,17 @@ class _MyHomePageState extends State<MyHomePage> {
   void _getPrime(prime) {
     int i;
     if (prime == 2) {
-        setState(() {
-          checkPrime = true;
-        });
-      }
-    for (i = 2; i <= prime - 1; i++) {
-      if (prime % i == 0) {
+      setState(() {
+        checkPrime = true;
+      });
+    }
+    for (i = 2; i <= prime - 1; i++) { // check ว่าเลขหารอะไรลงตัวบ้าง เริ่มจาก 2 เพราะ ถ้าเป็น 1 มันจะถูกทั้งหมด
+      if (prime % i == 0) { // มีเลขที่หารลงตัว == ไม่ใช่ Prime number
         setState(() {
           checkPrime = false;
         });
         break;
-      }
-       else {
+      } else {
         setState(() {
           checkPrime = true;
         });
@@ -68,25 +71,22 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void _getfibonacci(int fibonacci) {
-    setState(() {
-      if (fibonacci == 0 || fibonacci == 1) {
-        check = true;
-      } else {
-        n1 = fibonacci - 2;
-        n2 = fibonacci - 1;
-        // print(fibonacci == (n1 + n2));
-        if (fibonacci == (n1 + n2)) {
-          check = true;
-        } else {
-          check = false;
-        }
-      }
-      // check = n1 + n2;
-      // n1 = n2;
-      // n2 = check;
-      // print(check);
-    });
+  void _getfibonacci(int fibonacci) { 
+    while (fibonacci >= next) { // check เลข fibonacci จนถึงเลขที่กดอยู่
+      n1 = n2;
+      n2 = next;
+      next = n1 + n2; 
+      listFibonacci.add(next); // add เข้า list เพราะจะเอามา check ต่อ 
+    }
+    if (listFibonacci.contains(fibonacci) || fibonacci == 0) { // check ว่า เลขที่กดอยู่ อยู่ใน List fibonacci หรือป่าว 
+      setState(() {
+        checkFibonacci = true;
+      });
+    } else {
+      setState(() {
+        checkFibonacci = false;
+      });
+    }
   }
 
   @override
@@ -101,18 +101,37 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Container(
               width: double.infinity,
               child: RaisedButton(
-                color: (check == true) ? Colors.lightGreen : Colors.white,
+                color:
+                    (checkFibonacci == true) ? Colors.lightGreenAccent : Colors.white,
                 onPressed: _incrementCounter,
-                child: Text('$_fibonacci'),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('$_fibonacci'),
+                    (checkFibonacci == true)
+                        ? Text('This number is fibonacci number')
+                        : Text('This number is not fibonacci number')
+                  ],
+                ),
               ),
             )),
             Expanded(
                 child: Container(
               width: double.infinity,
               child: RaisedButton(
-                color: (checkPrime == true) ? Colors.lightGreen : Colors.white,
+                color: (checkPrime == true) ? Colors.lightGreenAccent : Colors.white,
                 onPressed: _incrementCounter,
-                child: Text('$_prime'),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('$_prime'),
+                    (checkPrime == true)
+                        ? Text('This number is prime number')
+                        : Text('This number is not prime number')
+                  ],
+                ),
               ),
             ))
           ],
