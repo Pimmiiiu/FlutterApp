@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterApp/fontTheme.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,13 +42,35 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-  void _incrementCounter() { // กด button แล้ว +เลข
+  void _incrementCounter() {
+    // กด button แล้ว +เลข
     setState(() {
       _fibonacci++;
       _getfibonacci(_fibonacci);
       _prime++;
       _getPrime(_prime);
     });
+  }
+
+  void _decrementCounter() {
+    // กด button แล้ว -เลข
+    if (_fibonacci == 0 || _prime == 0) {
+      setState(() {
+        _fibonacci = 0;
+        _getfibonacci(_fibonacci);
+        _prime = 0;
+        _getPrime(_prime);
+      });
+    } else {
+      setState(() {
+        _fibonacci--;
+
+        _getfibonacci(_fibonacci);
+        _prime--;
+        print(_prime);
+        _getPrime(_prime);
+      });
+    }
   }
 
   void _getPrime(prime) {
@@ -57,29 +80,41 @@ class _MyHomePageState extends State<MyHomePage> {
         checkPrime = true;
       });
     }
-    for (i = 2; i <= prime - 1; i++) { // check ว่าเลขหารอะไรลงตัวบ้าง เริ่มจาก 2 เพราะ ถ้าเป็น 1 มันจะถูกทั้งหมด
-      if (prime % i == 0) { // มีเลขที่หารลงตัว == ไม่ใช่ Prime number
-        setState(() {
-          checkPrime = false;
-        });
-        break;
-      } else {
-        setState(() {
-          checkPrime = true;
-        });
+    if (prime >= 2) {
+      for (i = 2; i <= prime - 1; i++) {
+        // check ว่าเลขหารอะไรลงตัวบ้าง เริ่มจาก 2 เพราะ ถ้าเป็น 1 มันจะถูกทั้งหมด
+        if (prime % i == 0) {
+          // มีเลขที่หารลงตัว == ไม่ใช่ Prime number
+          setState(() {
+            checkPrime = false;
+          });
+          break;
+        } else {
+          setState(() {
+            checkPrime = true;
+          });
+        }
       }
     }
+    else{
+      setState(() {
+        checkPrime = false;
+      });
+    }
+    
   }
 
-  void _getfibonacci(int fibonacci) { 
+  void _getfibonacci(int fibonacci) {
     listFibonacci.add(n1);
-    while (fibonacci >= next) { // check เลข fibonacci จนถึงเลขที่กดอยู่
+    while (fibonacci >= next) {
+      // check เลข fibonacci จนถึงเลขที่กดอยู่
       n1 = n2;
       n2 = next;
-      next = n1 + n2; 
-      listFibonacci.add(next); // add เข้า list เพราะจะเอามา check ต่อ 
+      next = n1 + n2;
+      listFibonacci.add(next); // add เข้า list เพราะจะเอามา check ต่อ
     }
-    if (listFibonacci.contains(fibonacci)) { // check ว่า เลขที่กดอยู่ อยู่ใน List fibonacci หรือป่าว 
+    if (listFibonacci.contains(fibonacci)) {
+      // check ว่า เลขที่กดอยู่ อยู่ใน List fibonacci หรือป่าว
       setState(() {
         checkFibonacci = true;
       });
@@ -101,40 +136,56 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
                 child: Container(
               width: double.infinity,
-              child: RaisedButton(
-                color:
-                    (checkFibonacci == true) ? Colors.lightGreenAccent : Colors.white,
-                onPressed: _incrementCounter,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('$_fibonacci'),
-                    (checkFibonacci == true)
-                        ? Text('This number is fibonacci number')
-                        : Text('This number is not fibonacci number')
-                  ],
-                ),
+              color: (checkFibonacci == true)
+                  ? Colors.lightGreenAccent
+                  : Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text('$_fibonacci', style: FontTheme.numberText),
+                  (checkFibonacci == true)
+                      ? Text('This number is fibonacci number')
+                      : Text('This number is not fibonacci number')
+                ],
               ),
             )),
             Expanded(
                 child: Container(
               width: double.infinity,
-              child: RaisedButton(
-                color: (checkPrime == true) ? Colors.lightGreenAccent : Colors.white,
-                onPressed: _incrementCounter,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('$_prime'),
-                    (checkPrime == true)
-                        ? Text('This number is prime number')
-                        : Text('This number is not prime number')
-                  ],
-                ),
+              color:
+                  (checkPrime == true) ? Colors.lightGreenAccent : Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text('$_prime', style: FontTheme.numberText),
+                  (checkPrime == true)
+                      ? Text('This number is prime number')
+                      : Text('This number is not prime number')
+                ],
               ),
-            ))
+            )),
+            Row(
+              children: [
+                Expanded(
+                    child: Container(
+                        height: 50,
+                        color: Colors.white,
+                        child: RaisedButton(
+                          onPressed: _decrementCounter,
+                          child: Text('-', style: FontTheme.numberText),
+                        ))),
+                Expanded(
+                    child: Container(
+                        height: 50,
+                        color: Colors.white,
+                        child: RaisedButton(
+                          onPressed: _incrementCounter,
+                          child: Text('+', style: FontTheme.numberText),
+                        ))),
+              ],
+            ),
           ],
         ));
   }
